@@ -1,73 +1,8 @@
 @import url("./reset.css");
 
-#root {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, 250px);
-  padding: 60px;
-  gap: 12px;
-  margin: auto; 
-  text-align: center; 
-  margin-top: 20-px;
-  justify-content: center;
-}
-#rooot {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, 250px);
-  padding: 56px;
-  gap: 12px;
-  margin: auto; 
-  text-align: center; 
-  margin-top: 20-px;
-}
-
-
 body {
   margin: 0;
   padding: 0;
-}
-
-.item-wrapper{
-  background-color: #fffdfd;
-  width: 250px; /*250*/
-  height: 290px; /*270*/
-  display: flex;
-  justify-content: center;
-  padding: 10px 0px;
-  flex-direction: column;
-  align-items: center;
-  border-radius: 10px;
-  position: relative;
-}
-
-.item-wrapper img{ /*imagem dentro da div item-wrapper*/
-  width: 190px;
-  height: 250;
-  border-radius: 3px;
-}
-
-.div-itens{
-  padding-bottom: 10px;
-  font-family: 'Times New Roman', cursive; /*Fonte*/
-  font-weight: bold; /*Espessura*/
-  font-size: 11pt; /*tamanho*/
-}
-
-.item-wrapper:hover {
-  transform: rotate3d("45deg");
-  transition: all 5s;
-}
-
-.filter-wrapper {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  align-items: center;
-  height: 56px;
-  width: 100%;
-  background-color: rgba(0, 0, 0, 0.8);
-  /* position: fixed;*/ /*posiciona na tela e não sai do lugar, vem com top(distância em pixels do topo) e left(da esquerda pro meio)*/ 
-  /* margin-top: 0px; */
-  margin-top: 243px;
 }
 
 .nome-loja {
@@ -85,20 +20,6 @@ body {
   font-weight: bold; /*Espessura*/
   font-size: 20pt; /*tamanho*/
   z-index: 1;
-}
-
-.imagem-promocao {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  align-items: center;
-  height: 56px;
-  width: 100%;
-  background-color: pink;
-  /* background-color: rgba(0, 0, 0, 0.8); */
-  position: static;
-  top: 100px;
-  margin-top:300px;
 }
 
 .nova-receita > input {
@@ -124,15 +45,6 @@ body {
   height: 30px;
 }
 
-.filter-wrapper > button {
-  border: none;
-  background: rgb(61, 61, 190);
-  color: white;
-  border-radius: 8px;
-  width: 80px;
-  height: 24px;
-}
-
 .nome-loja > a > button {
   border: none;
   background: orangered;
@@ -147,6 +59,46 @@ body {
   background: white;
   color: black;
   border-radius: 8px;
-  width: 160px;
+  width: 280px;
   height: 24px;
+}
+
+.pesquisa {
+  border: none;
+  background: orangered;
+  color: black;
+  border-radius: 8px;
+  width: 130px;
+  height: 30px;
+}
+
+.listar-receitas{
+  display: grid;
+  flex-direction: row;
+  padding: 0 30px;
+  background: #fffdd0;
+  width: 96%;
+  height: 100%;
+  grid-template-columns: repeat(auto-fill, 230px);
+  padding-top: 80px;
+  padding-bottom: 80px;
+}
+
+.listar-itens{
+  display: grid;
+  /* padding: 0 12px; */
+  background: write;
+  width: 230px;
+  /* height: 400px; */
+  height: 200px;
+  padding: 50px;
+}
+
+.imagem{
+  display: flex;
+  flex-direction: column;
+  background: write;
+  /* width: 230px; */
+  width: 200px;
+  height: 200px;
 }

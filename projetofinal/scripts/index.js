@@ -1,85 +1,86 @@
 "use strict";
-// Façam o front de uma loja online.
-// O sistema deve:
-// -Listar os itens da loja
-// -Permitir filtrar os itens por:  tamanho, coreS, preço, categoria
-// Usem um design inventado por vocês ou que acharem pela internet, façam um CSS bacana porque a interface vai contar peso para avaliação.
-// O trabalho deve ser entregue na quarta feira até as 00:00.
-const blusas = [
-    { id: 1, marca: "Calvin Klein.", modelo: "Calça Jeans", preco: 185.50, cor: "jeans", tamanho: "P", imagem: "./imagens/roupa1.jpg" },
-    { id: 2, marca: "Malwee", modelo: "Blusa Manga Longa", preco: 35.00, cor: "preta", tamanho: "M", imagem: "./imagens/roupa2.webp" },
-    { id: 3, marca: "Malwee", modelo: "Casaco", preco: 120.5, cor: "xadrez", tamanho: "M", imagem: "./imagens/roupa3.webp" },
-    { id: 4, marca: "puma", modelo: "Biquini", preco: 98.00, cor: "preto", tamanho: "G", imagem: "./imagens/roupa4.jpg" },
-    { id: 5, marca: "puma", modelo: "Sueter", preco: 110.99, cor: "marrom", tamanho: "P", imagem: "./imagens/roupa5.webp" },
-    { id: 6, marca: "pia", modelo: "blusa do boruto", preco: 1.99, cor: "rosa", tamanho: "G", imagem: "./imagens/roupa1.jpg" },
-    { id: 7, marca: "cavalera", modelo: "blusa do cavalo de fogo", preco: 1.99, cor: "verde", tamanho: "P", imagem: "./imagens/roupa1.jpg" },
-    { id: 8, marca: "reserva", modelo: "blusa do cavalo de fogo azul", preco: 1.99, cor: "azul", tamanho: "M", imagem: "./imagens/roupa1.jpg" },
-];
-const blusasDesconto = [
-    { id: 9, marca: "Calvin Klein.", modelo: "Calça Jeans", preco: 185.50, cor: "jeans", tamanho: "40", imagem: "./imagens/roupa2.webp" },
-    { id: 10, marca: "lafrente", modelo: "blusa do one piece", preco: 7.0, cor: "azul", tamanho: "M", imagem: "./imagens/roupa2.webp" },
-    { id: 11, marca: "ardidas", modelo: "blusa do tokyo ghoul", preco: 12.5, cor: "vermelha", tamanho: "G", imagem: "./imagens/roupa3.webp" },
-    { id: 12, marca: "puma", modelo: "blusa do jujutsu no kaizen", preco: 1.99, cor: "rosa", tamanho: "P", imagem: "./imagens/roupa2.webp" },
-    { id: 13, marca: "calvo cleide", modelo: "blusa do kimetsu no yaiba", preco: 1.99, cor: "amarela", tamanho: "M", imagem: "./imagens/roupa2.webp" },
-    { id: 14, marca: "pia", modelo: "blusa do boruto", preco: 1.99, cor: "rosa", tamanho: "G", imagem: "./imagens/roupa2.webp" },
-    { id: 15, marca: "cavalera", modelo: "blusa do cavalo de fogo", preco: 1.99, cor: "verde", tamanho: "P", imagem: "./imagens/roupa2.webp" },
-    { id: 16, marca: "reserva", modelo: "blusa do cavalo de fogo azul", preco: 1.99, cor: "azul", tamanho: "M", imagem: "./imagens/roupa2.webp" },
-];
-const rootElement = document.querySelector("#root");
-const roootElement = document.querySelector("#rooot");
-const searchButtonElement = document.querySelector("#search-button");
-const botaoVoltar = document.querySelector("#botao-voltar");
-const botaoAtendimento = document.querySelector("#botao-atendimento");
-const searchInputElement = document.querySelector("#input-pesquisar");
-const searchTypeElement = document.querySelector("#filter-type-select");
-function render(itens) {
-    if (rootElement) {
-        rootElement.innerHTML = "";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+const elemento = document.querySelector(".listar-receitas");
+const botaoPesquisar = document.querySelector("#botao-pesquisar");
+// const botaoHome = document.querySelector("#botao-home");
+const pesquisaInput = document.querySelector("#input-pesquisar");
+//O método split() divide uma String em uma lista ordenada de substrings, coloca essas substrings em um array e retorna o array
+function arrayFiltro(arrayIngredientes) {
+    return arrayIngredientes.split(","); //vírgula é o parâmetro de divisão do array
+}
+function getReceitas() {
+    return __awaiter(this, void 0, void 0, function* () {
+        const request = yield fetch("https://receitas-server.vercel.app/api");
+        const data = yield request.json();
+        // console.log(data);
+        return data;
+    });
+}
+function filtroIngredientes(event) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const ingredienteFiltrado = yield getReceitas();
+        const pesquisarIngrediente = pesquisaInput.value;
+        const filtro = ingredienteFiltrado.filter(dados => {
+            const variosIngredientes = arrayFiltro(pesquisarIngrediente).length > 1;
+            if (!variosIngredientes) {
+                const incluiIngredientes = dados.Ingredients.filter((ingredientesFiltrados) => {
+                    return ingredientesFiltrados.toLowerCase().includes(pesquisarIngrediente.toLowerCase());
+                });
+                return incluiIngredientes.length ? dados : false;
+            }
+            if (variosIngredientes) {
+                let acumulador = [];
+                const procuraValor = arrayFiltro(pesquisarIngrediente);
+                for (let i = 0; i < procuraValor.length; i++) {
+                    for (let y = 0; y < dados.Ingredients.length; y++) {
+                        if (dados.Ingredients[y].includes(procuraValor[i])) {
+                            if (acumulador.includes(procuraValor[i])) {
+                                return false;
+                            }
+                            acumulador.push(procuraValor[i]);
+                        }
+                    }
+                }
+                if (acumulador.length === procuraValor.length)
+                    return true;
+            }
+        });
+        cardsReceita(filtro);
+        console.log(filtro);
+    });
+}
+function cardsReceita(itens) {
+    if (elemento) {
+        elemento.innerHTML = "";
+        var i = 0;
         itens.forEach((item) => {
-            rootElement.innerHTML += `
-      <div> 
-        <a Key="${item.id}" href="./detalhes.html">
-          '<div class="item-wrapper">
-            '<img src="${item.imagem}" alt="">
-              '<div class="div-itens">
-                <h2>${item.modelo} - ${item.marca}</h2>
-                <h3>Tamanho: ${item.tamanho} - Cor: ${item.cor} - R$:${item.preco}</h3>
-            </div>
-          </div>
-        </a>
-      </div>
-    `;
+            if (i > 14) {
+                return false;
+            }
+            elemento.innerHTML +=
+                `<div class="listar-itens">
+        <div class="imagem"><img src="${item.urlImage}" alt="food-chef" <h5><a href="./atendimento.html">${item.Name}</a></h5></div>
+        <br>
+        <div>Autor: ${item.Author} </div>
+      </div>`;
+            i++;
         });
     }
-}
-function rendersale(itens) {
-    if (roootElement) {
-        roootElement.innerHTML = "";
-        itens.forEach((item) => {
-            roootElement.innerHTML += `
-      <div> 
-        '<div class="item-wrapper">
-          '<img src="${item.imagem}" alt="">
-            '<div class="div-itens">
-              <h2>${item.modelo} - ${item.marca}</h2>
-              <h3>Tamanho: ${item.tamanho} - Cor: ${item.cor} - R$:${item.preco}</h3>
-          </div>
-        </div>
-      </div>
-    `;
-        });
-    }
-}
-function search() {
-    const searchInputValue = searchInputElement.value;
-    const filterTypeValue = searchTypeElement.value;
-    const newBlusas = blusas.filter((blusa) => blusa[filterTypeValue].includes(searchInputValue));
-    render(newBlusas);
 }
 function eventListenerHandle() {
     var _a;
-    (_a = searchButtonElement) === null || _a === void 0 ? void 0 : _a.addEventListener("click", search);
+    (_a = botaoPesquisar) === null || _a === void 0 ? void 0 : _a.addEventListener("click", filtroIngredientes);
 }
-render(blusas);
-rendersale(blusasDesconto);
+// function home() {
+//   (botaoHome as HTMLButtonElement)?.addEventListener("click", filtroIngredientes);
+// }
+// home();
 eventListenerHandle();
